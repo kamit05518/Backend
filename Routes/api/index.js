@@ -17,7 +17,7 @@ Router.use("/cart", CartRouter);
 Router.use("/order", orderRouter);
 Router.use("/subcategories", subcategoriesRoutes);
 Router.use("/items", itemsRoutes); 
-Router.use("/tracking/",trackingRoutes);
+Router.use("/tracking",trackingRoutes);
 Router.use("/profile",profileRoutes)
 Router.use((req, res) => {
   res.status(404).json({ error: "Route does not exist" });
