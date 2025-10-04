@@ -2,7 +2,7 @@ const Profile = require("../models/Profile");
 const path = require('path');
 const fs = require('fs');
 
-
+// GET Profile
 exports.getProfile = async (req, res) => {
   try {
     const profile = await Profile.findOne().sort({ createdAt: -1 });
@@ -27,7 +27,7 @@ exports.getProfile = async (req, res) => {
 
     res.status(200).json(profileData);
   } catch (error) {
-    console.error(' Error fetching profile:', error);
+    console.error('Error fetching profile:', error);
     res.status(500).json({ 
       message: 'Server error while fetching profile',
       error: error.message 
@@ -123,10 +123,10 @@ exports.createOrUpdateProfile = async (req, res) => {
       return res.status(201).json(newProfile);
     }
   } catch (error) {
-    console.error(' Error saving profile:', error);
+    console.error('Error saving profile:', error);
     
     // Delete uploaded file if error occurs
-    if (req.file) {
+    if (req.file && fs.existsSync(req.file.path)) {
       fs.unlinkSync(req.file.path);
     }
 
@@ -143,7 +143,7 @@ exports.createOrUpdateProfile = async (req, res) => {
   }
 };
 
-// DELETE - Delete Profile (Optional)
+// DELETE - Delete Profile
 exports.deleteProfile = async (req, res) => {
   try {
     const profile = await Profile.findById(req.params.id);
@@ -168,7 +168,7 @@ exports.deleteProfile = async (req, res) => {
       message: 'Profile deleted successfully' 
     });
   } catch (error) {
-    console.error(' Error deleting profile:', error);
+    console.error('Error deleting profile:', error);
     res.status(500).json({ 
       message: 'Server error while deleting profile',
       error: error.message 

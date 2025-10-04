@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const profileSchema = new mongoose.Schema({
+const ProfileSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: [true, 'Full name is required'],
@@ -12,21 +12,23 @@ const profileSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    match: [/\S+@\S+\.\S+/, 'Invalid email format']
+    match: [/\S+@\S+\.\S+/, 'Please enter a valid email']
   },
   phone: {
     type: String,
     required: [true, 'Phone is required'],
+    trim: true,
     match: [/^\d{10}$/, 'Phone must be 10 digits']
   },
   dob: {
-    type: String,
+    type: Date,
     required: [true, 'Date of birth is required']
   },
   gender: {
     type: String,
     required: [true, 'Gender is required'],
-    enum: ['Male', 'Female', 'Other']
+    enum: ['male', 'female', 'other'],
+    lowercase: true
   },
   profileImage: {
     type: String,
@@ -36,4 +38,4 @@ const profileSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Profile', profileSchema);
+module.exports = mongoose.model("Profile", ProfileSchema);
