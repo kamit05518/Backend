@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const Profile = require('../../Controller/Profile.js');
+const Profile = require('../../Controller/profile');
 
 // Multer config
 const storage = multer.diskStorage({
