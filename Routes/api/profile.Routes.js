@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../../middlewares/uploadmiddleware"); 
+const upload = require("../../middlewares/uploadmiddleware"); // multer config
 const profile = require("../../Controller/profile");
 
 router.get("/", profile.getProfile);
