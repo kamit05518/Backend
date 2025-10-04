@@ -1,4 +1,4 @@
-const Profile = require('../models/Profile');
+const Profile = require("../models/Profile");
 const path = require('path');
 const fs = require('fs');
 
