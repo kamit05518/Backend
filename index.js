@@ -5,22 +5,27 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const jwt = require("jsonwebtoken");
 const routes = require("./Routes/index");
-
 const path = require("path");
-backend.use("/uploads", express.static(path.join(__dirname, "uploads")));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://frontend-amber-pi-51.vercel.app",
+];
 
 backend.use(
-  
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      // allow requests with no origin like Postman or curl
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = "The CORS policy for this site does not allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     methods: ["POST", "GET", "DELETE", "PUT"],
+    credentials: true,
   })
 );
-backend.use(express.json());
 
-backend.use(routes);
-connectDB();
-const PORT = process.env.PORT || 5001;
-backend.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
+backend.use("/uploads", express.static(path.join(__dirname, "uploads")));
 console.log("JWT SECRET from env:", process.env.JWT_SECRET);
